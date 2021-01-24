@@ -55,11 +55,6 @@ public class checkWin {
         System.out.println("Игра завершена");
     }
 
-    //   0 1 2
-    // 0 x x x
-    // 1 x x x
-    // 2 x x x
-
     public static boolean checkWin(char dot) {
         for (int y = 0; y < SIZE; y++) { // сравниваем по горизонтали до заданного количества совпадений WinCon
             for (int x = 0; x < SIZE - 1; x++) {
