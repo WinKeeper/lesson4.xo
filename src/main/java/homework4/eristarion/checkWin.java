@@ -17,6 +17,7 @@ public class checkWin {
 
     static final int WINCON = 4; // количество символов подряд для победы
     static int winConCount; //переменная в которую мы передаём количество совпадений
+    static int turnsToWin; //попробую вернуть количество ходов до победы (скорее всего один)
 
 
     public static void main(String[] args) {
@@ -26,6 +27,8 @@ public class checkWin {
         while (true) {
             playerTurn();
             printMap();
+//            turnsToWin();
+//            System.out.println(turnsToWin());
             if (checkWin(DOT_PLAYER)) {
                 System.out.println("Победил игрок!");
                 break;
@@ -37,6 +40,8 @@ public class checkWin {
 
             aiTurn();
             printMap();
+//            turnsToWin();
+//            System.out.println(turnsToWin());
             if (checkWin(DOT_AI)) {
                 System.out.println("Победил ИИ!");
                 break;
@@ -109,14 +114,67 @@ public class checkWin {
         return true;
     }
 
+//    public static int turnsToWin() {
+//        for (int y = 0; y < SIZE; y++) { // сравниваем по горизонтали до заданного количества совпадений WinCon
+//            for (int x = 0; x < SIZE - 1; x++) {
+//                if (map[x][y] != DOT_EMPTY && map[x][y] == map[x+1][y])  {
+//                    turnsToWin++;
+//                }
+//                if (map[x][y] != DOT_EMPTY && map[x][y] != map[x+1][y]) {
+//                    turnsToWin = 0;
+//                }
+//                if (winConCount == WINCON - 2) {
+//                    return turnsToWin;
+//                }
+//            }
+//        }
+//        for (int x = 0; x < SIZE; x++) { // сравниваем по вертикали до заданного количества совпадений в WinCon
+//            for (int y = 0; y < SIZE - 1; y++) {
+//                if (map[x][y] != DOT_EMPTY && map[x][y] == map[x][y+1])  {
+//                    turnsToWin++;
+//                }
+//                if (map[x][y] != DOT_EMPTY && map[x][y] != map[x][y+1]) {
+//                    turnsToWin = 0;
+//                }
+//                if (winConCount == WINCON - 2) {
+//                    return turnsToWin;
+//                }
+//            }
+//        }
+//        for (int x = 0; x < SIZE - 1; x++) { // сравниваем по диагонали до заданного количества совпадений в WinCon
+//            for (int y = 0; y < SIZE - 1; y++, x++) {
+//                if (map[x][y] != DOT_EMPTY && map[x][y] == map[x+1][y+1])  {
+//                    turnsToWin++;
+//                }
+//                if (map[x][y] != DOT_EMPTY && map[x][y] != map[x+1][y+1]) {
+//                    turnsToWin = 0;
+//                }
+//                if (winConCount == WINCON - 2) {
+//                    return turnsToWin;
+//                }
+//            }
+//        }
+//        return turnsToWin;
+//    }
+
     public static void aiTurn() {
-        int x, y;
-        do {
-            x = random.nextInt(SIZE);
-            y = random.nextInt(SIZE);
-        } while (!isCellEmpty(x, y));
-        map[x][y] = DOT_AI;
-        System.out.printf("Ход ИИ: [%d, %d]\n", x + 1, y + 1);
+        if (turnsToWin == WINCON - 2) { //тут должен быть перебор с ещё одним методом, проверяющим возможность постановки символа НЕ ЗА пределы поля относительно символа игрока.
+            int x, y;
+            do {
+                x = random.nextInt(SIZE);
+                y = random.nextInt(SIZE);
+            } while (!isCellEmpty(x, y));
+            map[x][y] = DOT_AI;
+            System.out.printf("Ход ИИ: [%d, %d]\n", x + 1, y + 1);
+        } else {
+            int x, y;
+            do {
+                x = random.nextInt(SIZE);
+                y = random.nextInt(SIZE);
+            } while (!isCellEmpty(x, y));
+            map[x][y] = DOT_AI;
+            System.out.printf("Ход ИИ: [%d, %d]\n", x + 1, y + 1);
+        }
     }
 
     public static void playerTurn() {
